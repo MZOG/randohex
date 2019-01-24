@@ -1,0 +1,35 @@
+@import 'default/reset';
+@import 'default/mixins';
+
+
+// import component templates
+@import 'components/home';
+
+
+// import font
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  @include transition(all .2s ease-in-out);
+  font-weight: 300;
+}
+
+#app {
+  width: 1000px;
+  margin: 30px auto;
+
+  @include mq('tablet-wide', max) {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 50px;
+    text-align: center;
+
+    @include mq('tablet-wide', max) {
+      font-size: 30px;
+    }
+  }
+}
+
