@@ -4,9 +4,7 @@
     </div>
 
     <div class="colorInfo">
-      <p>Color info:</p>
       <p>Hex: <span class="colorHex"></span></p>
-      <p>RGB: <span class="colorRgb"></span></p>
     </div>
 
     <div class="recentColors">
@@ -67,21 +65,9 @@ export default {
       return color;
 
     },
-
-    convertHexToRGB: function(color) {
-      let hex = color.replace('#','');
-      let r = parseInt(hex.substring(0,2), 16);
-      let g = parseInt(hex.substring(2,4), 16);
-      let b = parseInt(hex.substring(4,6), 16);
-
-      // get colorRgb paragraph and write the rgb code into page
-      let colorRgb = document.querySelector('.colorRgb');
-      colorRgb.innerHTML = '('+ r + ', ' + g + ', ' + b + ')';
-    },
   },
   mounted: function() {
-    this.convertHexToRGB(this.getRandomColor());
-    // this.saveRecentColors(this.getRandomColor());
+    this.getRandomColor();
   }
 }
 </script>
