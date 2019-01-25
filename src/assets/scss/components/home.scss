@@ -1,9 +1,24 @@
 .randomColor {
-  min-height: 400px;
+  min-height: 300px;
   border-radius: 30px;
   border-radius: 30px;
   transition: all .2s ease-in-out;
   box-shadow: 0 0 40px rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include mq('tablet', min) {
+    min-height: 400px;
+  }
+
+  @include mq('desktop', min) {
+    min-height: 500px;
+  }
+
+  h2.colorHex {
+    font-size: 90px;
+  }
 }
 
 .colorInfo {
@@ -11,5 +26,29 @@
 
   p {
     font-size: 20px;
+  }
+}
+
+.recentColors {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+
+  .recentColor {
+    width: calc(20% - 10px);
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    @include transition(all .2s ease-in-out);
+
+    &:hover {
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
   }
 }

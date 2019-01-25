@@ -4,7 +4,7 @@
 
 // import component templates
 @import 'components/home';
-
+@import 'components/footer';
 
 // import font
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
@@ -16,18 +16,19 @@ body {
 }
 
 #app {
-  width: 1000px;
+  width: 1200px;
   margin: 30px auto;
 
-  @include mq('tablet-wide', max) {
+  @include mq('desktop', max) {
     width: 100%;
+    padding: 0 30px;
   }
 
   h1 {
     font-size: 50px;
     text-align: center;
 
-    @include mq('tablet-wide', max) {
+    @include mq('desktop', max) {
       font-size: 30px;
     }
   }
