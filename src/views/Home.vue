@@ -1,28 +1,48 @@
 <template>
   <div class="home">
-    <div class="randomColor">
-    </div>
-
+    <color-block class="randomColor" :color="currentColor"></color-block>
     <div class="colorInfo">
-      <p>Hex: <span class="colorHex"></span></p>
+      <p>Hex: <span class="colorHex">{{currentColor}}</span></p>
     </div>
-
+    
+    <button @click="getRandomColor()">next color</button>
     <div class="recentColors">
-
+      <template v-for="color in recentColorsWithoutFirst">
+        <color-block :key="color" class="recentColor" :color="color" display-hex></color-block>
+      </template>
     </div>
-
     <foot></foot>
   </div>
-</template>
+</template> 
 
 <script>
-
+import ColorBlock from '../components/ColorBlock.vue';
 import Foot from '../components/Footer.vue';
 
 export default {
   name: 'home',
+  data() {
+    return {
+      recentColors: [],
+      currentColor: null,
+    }
+  },
+  watch: {
+    currentColor: function(newColor) {
+      if(!newColor) return;
+
+      this.recentColors.unshift(this.currentColor);
+      localStorage.setItem('recentColors', JSON.stringify(this.recentColors));
+    }
+  },
   components: {
-    Foot
+    Foot,
+    ColorBlock
+  },
+  computed: {
+    recentColorsWithoutFirst: function() {
+      return this.recentColors.slice(1);
+    }
   },
   methods: {
     getRandomColor: function() {
@@ -33,41 +53,16 @@ export default {
         color += letters[Math.floor(Math.random() * 16)];
       }
 
-      // get randomColor div and change background
-      let colorContainer = document.querySelector('.randomColor');
-      colorContainer.style.backgroundColor = color;
-
-      // get colorHex paragraph and write the hex code into page
-      let colorHex = document.querySelector('.colorHex');
-      colorHex.innerHTML = color;
-      
-      // save recent colors to localStorage
-      let savedColors = localStorage.getItem('colors');
-      savedColors = (savedColors) ? JSON.parse(savedColors): [];
-      savedColors.push(color);
-      localStorage.setItem('colors', JSON.stringify(savedColors));
-
-      for (let i = 0; i < savedColors.length; i++) {
-        let recentColor = document.createElement('div');
-        recentColor.className = ('recentColor');
-        recentColor.style = ('background-color:' + savedColors[i]); 
-
-        // let recentColorText = document.createTextNode(savedColors[i]);
-        let recentColorText = document.createElement('p');
-        recentColorText.innerHTML = savedColors[i];
-        recentColor.appendChild(recentColorText);
-        
-
-        document.querySelector('.recentColors').prepend(recentColor);
-        // document.querySelector('.recentColor').appendChild(recentColorText);
-      }
+      this.currentColor = color;
 
       return color;
-
     },
   },
   mounted: function() {
     this.getRandomColor();
+    let colors = localStorage.getItem('recentColors');
+    if (!colors) return;
+    this.recentColors = JSON.parse(colors);
   }
 }
 </script>
